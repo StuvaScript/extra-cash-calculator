@@ -15,7 +15,7 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<Home goals={goals} />} />
         <Route path="/new-goal" element={<Form onAddGoal={handleAddGoal} />} />
       </Routes>
     </Router>

@@ -4,7 +4,6 @@ import { Link, useNavigate } from "react-router-dom";
 
 export default function Form({ onAddGoal }) {
   const [formData, setFormData] = useState({});
-  console.log(formData);
 
   const navigate = useNavigate();
 
