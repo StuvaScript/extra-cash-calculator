@@ -2,11 +2,12 @@ import PropTypes from "prop-types";
 
 export default function GoalsListItem({ goal }) {
   console.log(goal);
+
   return (
     <li>
-      <p>{goal.goalName}</p>
-      <p>{goal.moneyAmount}</p>
-      <p>{goal.dueDate}</p>
+      <span>{goal.goalName} </span>
+      <span>{goal.moneyAmount} </span>
+      <span>{goal.dueDate}</span>
     </li>
   );
 }

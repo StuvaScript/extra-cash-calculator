@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 export default function Form({ onAddGoal }) {
   const [formData, setFormData] = useState({});
+  console.log(formData);
 
   const navigate = useNavigate();
 
@@ -11,9 +12,19 @@ export default function Form({ onAddGoal }) {
     setFormData({ ...formData, [inputField]: event.target.value });
   };
 
+  //todo **`` Since the data coming back reformats itself, move this code to the GoalsListItems.jsx file for reformatting.
+  const reformattedData = (formData) => {
+    //? **`` Reformatting the date.
+    const year = formData.dueDate && formData.dueDate.slice(0, 4);
+    const monthAndDay = formData.dueDate && formData.dueDate.slice(5);
+    const joined = `${monthAndDay}-${year}`;
+    const newFormat = { ...formData, dueDate: joined };
+    return newFormat;
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    onAddGoal(formData);
+    onAddGoal(reformattedData(formData));
     setFormData({});
     navigate("/");
   };
