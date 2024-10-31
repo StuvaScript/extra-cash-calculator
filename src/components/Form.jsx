@@ -2,9 +2,8 @@ import PropTypes from "prop-types";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-export default function Form({ onAddGoal }) {
+export default function Form({ handleAddGoal }) {
   const [formData, setFormData] = useState({});
-  console.log(formData);
 
   const navigate = useNavigate();
 
@@ -12,19 +11,9 @@ export default function Form({ onAddGoal }) {
     setFormData({ ...formData, [inputField]: event.target.value });
   };
 
-  //todo **`` Since the data coming back reformats itself, move this code to the GoalsListItems.jsx file for reformatting.
-  const reformattedData = (formData) => {
-    //? **`` Reformatting the date.
-    const year = formData.dueDate && formData.dueDate.slice(0, 4);
-    const monthAndDay = formData.dueDate && formData.dueDate.slice(5);
-    const joined = `${monthAndDay}-${year}`;
-    const newFormat = { ...formData, dueDate: joined };
-    return newFormat;
-  };
-
   const handleSubmit = (e) => {
     e.preventDefault();
-    onAddGoal(reformattedData(formData));
+    handleAddGoal(formData);
     setFormData({});
     navigate("/");
   };
@@ -38,8 +27,8 @@ export default function Form({ onAddGoal }) {
         type="text"
         id="goal-name"
         name="goal-name"
-        value={formData.goalName || ""}
-        onChange={(e) => handleInputChange(e, "goalName")}
+        value={formData["goal"] || ""}
+        onChange={(e) => handleInputChange(e, "goal")}
         required
       />
       <br />
@@ -50,8 +39,8 @@ export default function Form({ onAddGoal }) {
         min="0"
         id="money-amount"
         name="money-amount"
-        value={formData.moneyAmount || ""}
-        onChange={(e) => handleInputChange(e, "moneyAmount")}
+        value={formData["money amount"] || ""}
+        onChange={(e) => handleInputChange(e, "money amount")}
         required
       />
       <br />
@@ -62,8 +51,8 @@ export default function Form({ onAddGoal }) {
         min={today}
         id="due-date"
         name="due-date"
-        value={formData.dueDate || ""}
-        onChange={(e) => handleInputChange(e, "dueDate")}
+        value={formData["due date"] || ""}
+        onChange={(e) => handleInputChange(e, "due date")}
         required
       />
       <div>
@@ -77,5 +66,5 @@ export default function Form({ onAddGoal }) {
 }
 
 Form.propTypes = {
-  onAddGoal: PropTypes.func,
+  handleAddGoal: PropTypes.func,
 };

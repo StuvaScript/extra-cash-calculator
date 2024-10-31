@@ -17,9 +17,9 @@ export default function Home({ goals }) {
 Home.propTypes = {
   goals: PropTypes.arrayOf(
     PropTypes.exact({
-      dueDate: PropTypes.string.isRequired,
-      goalName: PropTypes.string.isRequired,
-      moneyAmount: PropTypes.string.isRequired,
+      "due date": PropTypes.string.isRequired,
+      goal: PropTypes.string.isRequired,
+      "money amount": PropTypes.string.isRequired,
     })
   ),
 };

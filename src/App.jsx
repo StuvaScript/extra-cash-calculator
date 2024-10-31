@@ -1,63 +1,48 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./components/Home";
 import Form from "./components/Form";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { fetchData, postData } from "./functions.js/apiCalls";
 // import styles from "./App.module.css";
-
-const url = `https://api.airtable.com/v0/${
-  import.meta.env.VITE_AIRTABLE_BASE_ID
-}/${import.meta.env.VITE_TABLE_NAME}`;
 
 function App() {
   const [goals, setGoals] = useState([]);
   console.log(goals);
 
-  const postData = async ({ goalName, moneyAmount, dueDate }) => {
-    try {
-      const airtableData = {
-        fields: {
-          goal: goalName,
-          "money amount": Number(moneyAmount),
-          "due date": dueDate,
-        },
-      };
-
-      const options = {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${import.meta.env.VITE_AIRTABLE_API_TOKEN}`,
-        },
-        body: JSON.stringify(airtableData),
-      };
-
-      const res = await fetch(url, options);
-
-      if (!res.ok) {
-        const message = `Error: ${res.status}`;
-        throw new Error(message);
-      }
-
-      const data = await res.json();
-      return data;
-    } catch (error) {
-      console.log(error.message);
-      return null;
-    }
-  };
-
   const handleAddGoal = async (newGoal) => {
-    console.log(newGoal);
     setGoals([...goals, newGoal]);
     const res = await postData(newGoal);
     console.log(res);
   };
 
+  const extractSpecificData = (data) => {
+    console.log(data);
+    return data.records.map((record) => {
+      return {
+        // id: record.id,
+        goal: record.fields.goal,
+        "money amount": record.fields["money amount"],
+        "due date": record.fields["due date"],
+      };
+    });
+  };
+
+  //todo **`` When I try to use the newData below in setGoals it says "Objects can't be children". Need to chase down this problem. Also un-comment out the "id" property above and add to propTypes and use as the list key
+
+  useEffect(() => {
+    fetchData()
+      .then((data) => extractSpecificData(data))
+      .then((newData) => console.log(newData));
+  }, []);
+
   return (
     <Router>
       <Routes>
         <Route path="/" element={<Home goals={goals} />} />
-        <Route path="/new-goal" element={<Form onAddGoal={handleAddGoal} />} />
+        <Route
+          path="/new-goal"
+          element={<Form handleAddGoal={handleAddGoal} />}
+        />
       </Routes>
     </Router>
   );
