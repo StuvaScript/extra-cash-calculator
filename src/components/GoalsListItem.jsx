@@ -17,15 +17,17 @@ export default function GoalsListItem({ goal }) {
     <li>
       <span>{goal.goal} </span>
       <span>{goal["money amount"]} </span>
-      <span>{goal["due date"]}</span>
+      <span>{goal["due date"]} </span>
+      <span>{goal.id}</span>
     </li>
   );
 }
 
 GoalsListItem.propTypes = {
   goal: PropTypes.exact({
+    id: PropTypes.string.isRequired,
     "due date": PropTypes.string.isRequired,
     goal: PropTypes.string.isRequired,
-    "money amount": PropTypes.string.isRequired,
+    "money amount": PropTypes.number.isRequired,
   }),
 };

@@ -4,11 +4,21 @@ import { Link, useNavigate } from "react-router-dom";
 
 export default function Form({ handleAddGoal }) {
   const [formData, setFormData] = useState({});
+  console.log(formData);
 
   const navigate = useNavigate();
 
   const handleInputChange = (event, inputField) => {
-    setFormData({ ...formData, [inputField]: event.target.value });
+    let value = event.target.value;
+    if (inputField === "money amount") {
+      value = Number(event.target.value);
+    }
+
+    setFormData({
+      ...formData,
+      [inputField]: value,
+      id: Date.now().toString(), // **`` Temporary ID
+    });
   };
 
   const handleSubmit = (e) => {
