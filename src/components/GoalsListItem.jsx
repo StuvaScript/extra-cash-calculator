@@ -1,7 +1,8 @@
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 
 export default function GoalsListItem({ goal }) {
-  console.log(goal);
+  console.dir(goal);
 
   // //todo **`` Since the data coming back reformats itself, use this for reformatting.
   // const reformattedData = (goal) => {
@@ -13,9 +14,19 @@ export default function GoalsListItem({ goal }) {
   //     return newFormat;
   //   };
 
+  //todo **`` State and useLocation aren't working.
   return (
     <li>
-      <span>{goal.goal} </span>
+      <button>
+        <Link
+          to={{
+            pathname: "/goal-page",
+            state: goal,
+          }}
+        >
+          {goal.goal}
+        </Link>
+      </button>
       <span>{goal["money amount"]} </span>
       <span>{goal["due date"]} </span>
       <span>{goal.id}</span>

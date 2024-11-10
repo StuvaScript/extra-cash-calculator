@@ -3,7 +3,7 @@ import GoalsList from "./GoalsList";
 import PropTypes from "prop-types";
 
 export default function Home({ goals, loading }) {
-  console.log(goals);
+  console.dir(goals);
   // console.log(typeof goals[0]["money amount"]);
   return (
     <div>
